@@ -1,6 +1,25 @@
 // IMPORT PACKAGES
 // Here you should import the required packages for your Express app: `express` and `morgan`
 
+const express = require('express');
+const express = require('morgan');
+
+const app = express();
+
+
+
+app.use(express.static('public'));
+app.use(express.json());
+app.use(morgan("dev"));
+
+app.get('/home', (request, response, next) => {
+    console.log(request);
+    response.send('<h1>Hello World</h1>');
+});
+
+app.listen(4000, ()=>{
+    console.log("listening to port 4000");
+});
 
 
 // CREATE EXPRESS APP
