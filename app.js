@@ -2,7 +2,7 @@
 // Here you should import the required packages for your Express app: `express` and `morgan`
 
 const express = require('express');
-const express = require('morgan');
+const morgan = require('morgan');
 
 const app = express();
 
@@ -11,14 +11,28 @@ const app = express();
 app.use(express.static('public'));
 app.use(express.json());
 app.use(morgan("dev"));
-
-app.get('/home', (request, response, next) => {
-    console.log(request);
-    response.send('<h1>Hello World</h1>');
+app.use((req, res, next) => {
+    res.status(404).sendFile(__dirname + "/views/not-found.html");
 });
 
-app.listen(4000, ()=>{
-    console.log("listening to port 4000");
+app.get("/", (req, res) => {
+    res.sendFile(__dirname + "/views/home.html");
+});
+
+app.get("/blog", (req, res) => {
+    res.sendFile(__dirname + "/views/blog.html");
+});
+
+app.get("/api/projects", (req, res) => {
+    res.sendFile(__dirname + "/data/projects.json")
+});
+
+app.get("/api/articles", (req, res) => {
+    res.sendFile(__dirname + "/data/articles.json")
+});
+
+app.listen(5005, ()=> {
+    console.log("listening to port 5005");
 });
 
 
